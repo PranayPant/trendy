@@ -1,5 +1,4 @@
-import faker from 'faker';
-import fs from 'fs';
+import faker, { time } from 'faker';
 
 let _orders = [],
    _products = [],
@@ -12,7 +11,7 @@ let _params = {
    purchaseInterval: 2,
 };
 
-function createProducts(orderId, restaurantId) {
+function createProducts(orderId, timeOfPurchase, restaurantId) {
    function createProduct() {
       const _id = faker.random.uuid();
       const priceAmount = faker.finance.amount();
@@ -20,6 +19,7 @@ function createProducts(orderId, restaurantId) {
          _id,
          orderId,
          restaurantId,
+         timeOfPurchase,
          name: faker.commerce.productName(),
          description: faker.commerce.productDescription(),
          cost: {
@@ -38,12 +38,13 @@ function createProducts(orderId, restaurantId) {
 
 function createOrder(restaurantId) {
    const _id = faker.random.uuid();
-   const products = createProducts(_id, restaurantId);
+   const timeOfPurchase = faker.date.recent(_params.purchaseInterval);
+   const products = createProducts(_id, timeOfPurchase, restaurantId);
    return {
       _id,
       restaurantId,
       products,
-      timeOfPurchase: faker.date.recent(_params.purchaseInterval),
+      timeOfPurchase,
    };
 }
 
