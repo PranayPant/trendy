@@ -110,14 +110,14 @@ export default function Home(props) {
 export async function getStaticProps() {
    let data = [];
    try {
-      // const res = await fetch(`${process.env.TRENDY_APP_URL}/api/rank`, {
-      //    method: 'POST',
-      //    body: {
-      //       days: 2,
-      //    },
-      // });
-      // const body = await res.json();
-      // data = body.data;
+      const res = await fetch(`${process.env.TRENDY_APP_URL}/api/rank`, {
+         method: 'POST',
+         body: {
+            days: 2,
+         },
+      });
+      const body = await res.json();
+      data = body.data;
    } catch (err) {
       console.error('Err getting static props for page /:', err);
    } finally {
