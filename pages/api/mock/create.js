@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 import middleware from '../../../middleware/db';
-import mock from '../../../data';
+import { mock } from '../../../data';
 
 const handler = nextConnect();
 handler.use(middleware);
@@ -14,14 +14,14 @@ handler.post(async (req, res) => {
       } else {
          const params = req.body;
          const db = req.db;
-         const response = await db.listCollections().toArray();
-         const colls = response.map((c) => c.name);
          const { productBulk, orderBulk, restaurantBulk } = mock(params);
+
          await Promise.all([
             db.collection('products').drop(),
             db.collection('orders').drop(),
             db.collection('restaurants').drop(),
          ]);
+
          await Promise.all([
             db.createCollection('products'),
             db.createCollection('orders'),
@@ -34,7 +34,6 @@ handler.post(async (req, res) => {
          ]);
          res.status(200).json({
             body: 'Success!',
-            collections: colls,
          });
       }
    } catch (err) {
