@@ -6,24 +6,10 @@ const handler = nextConnect();
 handler.use(middleware);
 
 function transform(docs) {
-   function getElapsedTime(lastPurchased) {
-      const ms = new Date().getTime() - new Date(`${lastPurchased}`).getTime();
-      let time = Math.ceil(ms / 60000);
-      if (time < 60) {
-         time = `${time} min ago`;
-      } else if (time >= 60 && time < 1440) {
-         const hrs = Math.ceil(time / 60);
-         time = `${hrs} ${hrs > 1 ? 'hours' : 'hour'} ago`;
-      } else {
-         const days = Math.ceil(time / 1440);
-         time = `${days} ${days > 1 ? 'days' : 'day'} ago`;
-      }
-      return time;
-   }
    const data = docs.map(
       ({ name, lastPurchased, lastNumSold, description, cost }) => ({
          name,
-         lastPurchased: getElapsedTime(lastPurchased),
+         lastPurchased,
          quantity: lastNumSold,
          description,
          price: cost.tag,
