@@ -28,6 +28,7 @@ function createProducts() {
          restaurantIds: [],
          orders: [],
          lastPurchased: null,
+         lastNumSold: 0,
          name: faker.commerce.productName(),
          description: faker.commerce.productDescription(),
          cost: {
@@ -50,6 +51,7 @@ function addProductsToOrder(orderId, timeOfPurchase, restaurantProductIds) {
          const productId = faker.random.arrayElement(restaurantProductIds);
          for (let i = 0; i < _products.length; i++) {
             if (_products[i]._id === productId) {
+               let quantitySold = 0;
                // Find the order the product is going to
                if (_products[i].orders.length === 0) {
                   _products[i].orders.push({
@@ -57,12 +59,14 @@ function addProductsToOrder(orderId, timeOfPurchase, restaurantProductIds) {
                      timeOfPurchase,
                      quantitySold: 1,
                   });
+                  quantitySold = 1;
                } else {
                   let mult = false;
                   for (let j = 0; j < _products[i].orders.length; j++) {
                      if (_products[i].orders[j]._id === orderId) {
                         _products[i].orders[j].quantitySold += 1;
                         mult = true;
+                        quantitySold = _products[i].orders[j].quantitySold;
                      }
                   }
                   if (!mult) {
@@ -71,12 +75,26 @@ function addProductsToOrder(orderId, timeOfPurchase, restaurantProductIds) {
                         timeOfPurchase,
                         quantitySold: 1,
                      });
+                     quantitySold = 1;
                   }
                }
                _products[i].numOrders += 1;
-               _products[i].lastPurchased = _products[i].lastPurchased
-                  ? getLatestDate(_products[i].lastPurchased, timeOfPurchase)
-                  : timeOfPurchase;
+               // _products[i].lastPurchased = _products[i].lastPurchased
+               //    ? getLatestDate(_products[i].lastPurchased, timeOfPurchase)
+               //    : timeOfPurchase;
+               // Update last purchase time
+               if (_products[i].lastPurchased) {
+                  if (
+                     new Date(`${_products[i].lastPurchased}`).getTime() <=
+                     new Date(`${timeOfPurchase}`).getTime()
+                  ) {
+                     _products[i].lastPurchased = timeOfPurchase;
+                     _products[i].lastNumSold = quantitySold;
+                  }
+               } else {
+                  _products[i].lastPurchased = timeOfPurchase;
+                  _products[i].lastNumSold = 1;
+               }
                orderProducts.push(productId);
             }
          }

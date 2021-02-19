@@ -20,7 +20,30 @@ export default function Home(props) {
          label: 'Last Sold',
          options: {
             filter: true,
-            sort: false,
+            sort: true,
+            customBodyRender: (lastPurchased) => {
+               const ms =
+                  new Date().getTime() - new Date(`${lastPurchased}`).getTime();
+               let time = Math.ceil(ms / 60000);
+               if (time < 60) {
+                  time = `${time} min ago`;
+               } else if (time >= 60 && time < 1440) {
+                  const hrs = Math.ceil(time / 60);
+                  time = `${hrs} ${hrs > 1 ? 'hours' : 'hour'} ago`;
+               } else {
+                  const days = Math.ceil(time / 1440);
+                  time = `${days} ${days > 1 ? 'days' : 'day'} ago`;
+               }
+               return time;
+            },
+         },
+      },
+      {
+         name: 'quantity',
+         label: 'Quantity',
+         options: {
+            filter: true,
+            sort: true,
          },
       },
       {
@@ -28,7 +51,7 @@ export default function Home(props) {
          label: 'Description',
          options: {
             filter: true,
-            sort: false,
+            sort: true,
          },
       },
       {
@@ -36,7 +59,7 @@ export default function Home(props) {
          label: 'Price',
          options: {
             filter: true,
-            sort: false,
+            sort: true,
          },
       },
    ];

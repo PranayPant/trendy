@@ -6,12 +6,15 @@ const handler = nextConnect();
 handler.use(middleware);
 
 function transform(docs) {
-   const data = docs.map(({ name, lastPurchased, description, cost }) => ({
-      name,
-      lastPurchased,
-      description,
-      price: cost.tag,
-   }));
+   const data = docs.map(
+      ({ name, lastPurchased, lastNumSold, description, cost }) => ({
+         name,
+         lastPurchased,
+         quantity: lastNumSold,
+         description,
+         price: cost.tag,
+      }),
+   );
    return data;
 }
 
@@ -29,6 +32,7 @@ handler.post(async (req, res) => {
                $gte: new Date(new Date() - interval),
             },
          })
+         .limit(100)
          .toArray();
       rank(docs);
       const data = transform(docs);
