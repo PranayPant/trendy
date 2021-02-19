@@ -4,6 +4,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import MUIDataTable from 'mui-datatables';
 import { useState } from 'react';
 
+import Loader from '../components/Loader';
+
 export default function Home(props) {
    const [state, setState] = useState({ data: props.data });
    const columns = [
@@ -93,7 +95,7 @@ export default function Home(props) {
                      hasMore={true}
                      loader={
                         <div className="loader" key={0}>
-                           Loading ...
+                           <Loader />
                         </div>
                      }
                   >
