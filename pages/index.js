@@ -20,7 +20,15 @@ export default function Home(props) {
          label: 'Last Sold',
          options: {
             filter: true,
-            sort: false,
+            sort: true,
+         },
+      },
+      {
+         name: 'quantity',
+         label: 'Quantity',
+         options: {
+            filter: true,
+            sort: true,
          },
       },
       {
@@ -28,7 +36,7 @@ export default function Home(props) {
          label: 'Description',
          options: {
             filter: true,
-            sort: false,
+            sort: true,
          },
       },
       {
@@ -36,7 +44,7 @@ export default function Home(props) {
          label: 'Price',
          options: {
             filter: true,
-            sort: false,
+            sort: true,
          },
       },
    ];
