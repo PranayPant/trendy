@@ -63,27 +63,29 @@ export default function Home(props) {
             <h1 className={styles.title}>Trendy</h1>
 
             <div className={styles.grid}>
-               <InfiniteScroll
-                  pageStart={0}
-                  loadMore={fetchMoreData}
-                  hasMore={true}
-                  loader={
-                     <div className="loader" key={0}>
-                        Loading ...
-                     </div>
-                  }
-               >
-                  <MUIDataTable
-                     data={state.data}
-                     columns={columns}
-                     pagination={false}
-                     options={{
-                        responsive: 'simple',
-                        pagination: false,
-                        selectableRows: 'none',
-                     }}
-                  />
-               </InfiniteScroll>
+               {state.data.length > 0 && (
+                  <InfiniteScroll
+                     pageStart={0}
+                     loadMore={fetchMoreData}
+                     hasMore={true}
+                     loader={
+                        <div className="loader" key={0}>
+                           Loading ...
+                        </div>
+                     }
+                  >
+                     <MUIDataTable
+                        data={state.data}
+                        columns={columns}
+                        pagination={false}
+                        options={{
+                           responsive: 'simple',
+                           pagination: false,
+                           selectableRows: 'none',
+                        }}
+                     />
+                  </InfiniteScroll>
+               )}
             </div>
          </main>
 
@@ -106,16 +108,16 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-   let data = null;
+   let data = [];
    try {
-      const res = await fetch(`${process.env.TRENDY_APP_URL}/api/rank`, {
-         method: 'POST',
-         body: {
-            days: 2,
-         },
-      });
-      const body = await res.json();
-      data = body.data;
+      // const res = await fetch(`${process.env.TRENDY_APP_URL}/api/rank`, {
+      //    method: 'POST',
+      //    body: {
+      //       days: 2,
+      //    },
+      // });
+      // const body = await res.json();
+      // data = body.data;
    } catch (err) {
       console.error('Err getting static props for page /:', err);
    } finally {
