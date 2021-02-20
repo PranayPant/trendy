@@ -100,7 +100,7 @@ export default function makeColumns(state, setState) {
                display: (filterList, onChange, index, column) => (
                   <div>
                      <FormLabel>Last Sold </FormLabel>
-                     <FormGroup row>
+                     <FormGroup row={state.windowWidth < 400 ? false : true}>
                         <TextField
                            label="min"
                            value={filterList[index][0] || ''}

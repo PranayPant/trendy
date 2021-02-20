@@ -14,6 +14,8 @@ export default function Home(props) {
       paginatedData: props.data.slice(0, 10),
       filterChecked: false,
       loading: false,
+      windowWidth: 0,
+      windowHeight: 0,
    });
 
    async function fetchMoreData() {
@@ -72,6 +74,20 @@ export default function Home(props) {
    }
 
    useEffect(() => {
+      setState((prev) => ({
+         ...prev,
+         windowHeight: window.innerHeight,
+         windowWidth: window.innerWidth,
+      }));
+      window.onresize = () => {
+         setState((prev) => {
+            return {
+               ...prev,
+               windowHeight: window.innerHeight,
+               windowWidth: window.innerWidth,
+            };
+         });
+      };
       window.onscroll = async () => {
          setState((prev) => ({ ...prev, scroll: true }));
       };
