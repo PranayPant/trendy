@@ -1,6 +1,16 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## View Finished App in Production
+
+Navigate to the [secure link](https://trendysnack.tk/) to view the deployed app!
+
+The app is hosted on a custom domain via [Vercel](https://vercel.com), a cloud hosting service build for Next.js apps.
+
+The app uses MongoDB Atlas cluster for persistent data storage.
+
+## Development
+
+**NOTE: Running in dev will not work until you create a .env.local with secrets used in the app...please reach out to me and I can provide you those secrets(such as MongoDB Atlas connection string)**
 
 First, run the development server:
 
