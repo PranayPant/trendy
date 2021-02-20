@@ -18,6 +18,30 @@ export default function Home(props) {
       windowHeight: 0,
    });
 
+   async function init() {
+      let data = [];
+      try {
+         setState((prev) => ({
+            ...prev,
+            loading: true,
+            windowHeight: window.innerHeight,
+            windowWidth: window.innerWidth,
+         }));
+         const res = await fetch(`${window.location.origin}/api/rank`, {
+            method: 'POST',
+            body: {
+               days: 2,
+            },
+         });
+         const body = await res.json();
+         data = body.data;
+      } catch (err) {
+         console.error('Err getting static props for page /:', err);
+      } finally {
+         setState((prev) => ({ ...prev, loading: false, data }));
+      }
+   }
+
    async function fetchMoreData() {
       if (window.scrollY + window.innerHeight === document.body.offsetHeight) {
          console.log(state.paginationIndex, state.data.length);
@@ -74,11 +98,7 @@ export default function Home(props) {
    }
 
    useEffect(() => {
-      setState((prev) => ({
-         ...prev,
-         windowHeight: window.innerHeight,
-         windowWidth: window.innerWidth,
-      }));
+      init();
       window.onresize = () => {
          setState((prev) => {
             return {
