@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Setup
 
-Optional: Make a `POST https://trendysnack.tk/api/mock/create` with body 
+*Optional*: Make a `POST https://trendysnack.tk/api/mock/create` with body 
 ```
 {
     "numRestaurants": 50,
