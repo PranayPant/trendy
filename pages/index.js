@@ -19,7 +19,6 @@ export default function Home(props) {
    });
 
    async function init() {
-      let data = [];
       try {
          setState((prev) => ({
             ...prev,
@@ -34,11 +33,11 @@ export default function Home(props) {
             },
          });
          const body = await res.json();
-         data = body.data;
-      } catch (err) {
-         console.error('Err getting static props for page /:', err);
-      } finally {
+         const data = body.data;
          setState((prev) => ({ ...prev, loading: false, data }));
+      } catch (err) {
+         console.error('Err loading fresh data on page load:', err);
+         setState((prev) => ({ ...prev, loading: false }));
       }
    }
 
