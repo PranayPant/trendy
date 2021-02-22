@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Setup
+
+Optional: Make a `POST https://trendysnack.tk/api/mock/create` with body 
+```
+{
+    "numRestaurants": 50,
+    "numOrders": 200,
+    "numProducts": 1000,
+    "purchaseInterval": 2
+}
+```
+to view fresh data.
+
 ## View Finished App in Production
 
 Navigate to the [secure link](https://trendysnack.tk/) to view the deployed app!
