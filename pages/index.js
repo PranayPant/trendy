@@ -34,7 +34,8 @@ export default function Home(props) {
          });
          const body = await res.json();
          const data = body.data;
-         setState((prev) => ({ ...prev, loading: false, data }));
+         const paginatedData = data.slice(0, 10);
+         setState((prev) => ({ ...prev, loading: false, data, paginatedData }));
       } catch (err) {
          console.error('Err loading fresh data on page load:', err);
          setState((prev) => ({ ...prev, loading: false }));
