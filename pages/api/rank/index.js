@@ -20,7 +20,7 @@ function transform(docs) {
 
 handler.post(async (req, res) => {
    const db = req.db;
-   const { days = 2 } = req.body;
+   const { days = 360 } = req.body;
    // 48 hour(2 days) interval in ms
    const interval = 1000 * 60 * 60 * 24 * days;
    try {
